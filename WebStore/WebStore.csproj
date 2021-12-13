@@ -10,10 +10,12 @@
     <None Remove="Controllers\" />
     <None Remove="View\" />
     <None Remove="View\Home\" />
+    <None Remove="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
-    <Folder Include="View\" />
-    <Folder Include="View\Home\" />
+    <Folder Include="Views\" />
+    <Folder Include="Views\Home\" />
+    <Folder Include="Models\" />
   </ItemGroup>
 </Project>
