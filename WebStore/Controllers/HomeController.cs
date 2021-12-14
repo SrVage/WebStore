@@ -18,10 +18,10 @@ namespace WebStore.Controllers
             new Employer(3, "Васин", "Александр", "Алексеевич", 41, 2543724, "Владимир"),
             new Employer(4, "Вениминов", "Илья", "Альбертович", 26, 3373227, "Краснодар"),
         };
+
         // GET: /<controller>/
         public IActionResult Index()
         {
-           
             return View();
         }
 
@@ -29,6 +29,10 @@ namespace WebStore.Controllers
         {
             return View(_employers);
         }
+
+        public IActionResult EmployerID(int id)
+        {
+            return View(_employers[id-1]);
+        }
     }
 }
-

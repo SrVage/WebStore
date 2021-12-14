@@ -19,11 +19,14 @@
             </tr>
             @foreach (var employer in Model)
             {
-                <th>@employer.ID</th>
-                <th>@employer.FirstName</th>
-                <th>@employer.LastName</th>
-                <th>@employer.MiddleName</th>
-                <th>@employer.Age</th>
+                <tr>
+                    <td>@employer.ID</td>
+                    <td>@employer.LastName</td>
+                    <td>@employer.FirstName</td>
+                    <td>@employer.MiddleName</td>
+                    <td>@employer.Age</td>
+                    <td><a href = "~/home/EmployerID/@employer.ID">Дополнительные сведения</a></td>
+                </tr>
             }
             </thead>
         </table>

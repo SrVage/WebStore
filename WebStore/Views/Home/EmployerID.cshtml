@@ -1,0 +1,34 @@
+@model WebStore.Models.Employer
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Работник</title>
+</head>
+<body>
+<table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Фамилия</th>
+                    <th>Имя</th>
+                    <th>Отчество</th>
+                    <th>Возраст</th>
+                    <th>Телефон</th>
+                    <th>Город</th>
+                </tr>
+            <tr>
+                        <td>@Model.ID.</td>
+                        <td>@Model.LastName</td>
+                        <td>@Model.FirstName</td>
+                        <td>@Model.MiddleName</td>
+                        <td>@Model.Age</td>
+                        <td>@Model.TelephoneNumber</td>
+                        <td>@Model.City</td>
+                        <td><a href = "~/home/Employers">Список сотрудников</a></td>
+                    </tr>
+            </thead>
+            </table>
+</body>
+</html>
