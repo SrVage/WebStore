@@ -20,6 +20,10 @@ public class EmployersController : Controller
     
     public IActionResult EmployerID(int id)
     {
-        return View(_employers[id-1]);
+        var employer = _employers.FirstOrDefault(e => e.ID == id);
+        if (employer is null)
+            return NotFound();
+        ViewBag.SelectedEmployer = employer;
+        return View(employer);
     }
 }

@@ -17,7 +17,7 @@
                     <td>@employer.FirstName</td>
                     <td>@employer.MiddleName</td>
                     <td>@employer.Age</td>
-                    <td><a href = "~/home/EmployerID/@employer.ID">Дополнительные сведения</a></td>
+                    <td><a asp-action="EmployerID" asp-route-id="@employer.ID">Дополнительные сведения</a></td>
                 </tr>
             }
             </thead>
