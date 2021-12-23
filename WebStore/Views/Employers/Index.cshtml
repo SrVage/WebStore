@@ -1,26 +1,40 @@
-﻿<div class="container">
+﻿@model IEnumerable<Employer>
+
+@{
+    ViewData["Title"] = "Cписок сотрудников";
+}
+
+<div class="container">
     <h3>Работники предприятия</h3>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Фамилия</th>
-                <th>Имя</th>
-                <th>Отчество</th>
-                <th>Возраст</th>
-            </tr>
-            @foreach (var employer in Model)
-            {
-                <tr>
-                    <td>@employer.ID</td>
-                    <td>@employer.LastName</td>
-                    <td>@employer.FirstName</td>
-                    <td>@employer.MiddleName</td>
-                    <td>@employer.Age</td>
-                    <td><a asp-action="Details" asp-route-id="@employer.ID">Дополнительные сведения</a></td>
-                    <td><a asp-action="Edit" asp-route-id="@employer.ID">Редактирование</a></td>
-                </tr>
-            }
-            </thead>
-        </table>
+    <a class="btn btn-default" asp-action="Create">Создать</a>
+    @if (Model.Any())
+  {
+      <table class="table">
+          <thead>
+          <tr>
+              <th>ID</th>
+              <th>Фамилия</th>
+              <th>Имя</th>
+              <th>Отчество</th>
+              <th>Возраст</th>
+          </tr>
+          @foreach (var employer in Model)
+          {
+              <tr>
+                  <td>@employer.ID</td>
+                  <td><a asp-action="Details" asp-route-id="@employer.ID">@employer.LastName</a></td>
+                  <td>@employer.FirstName</td>
+                  <td>@employer.MiddleName</td>
+                  <td>@employer.Age</td>
+                  <td><a asp-action="Edit" asp-route-id="@employer.ID">Редактирование</a></td>
+                  <td><a asp-action="Delete" asp-route-id="@employer.ID">Удаление</a></td>
+              </tr>
+          }
+          </thead>
+      </table>
+  }
+  else
+  {
+      <p>Сотрудников нет</p>
+  }
 </div>

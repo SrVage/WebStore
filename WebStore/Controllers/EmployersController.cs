@@ -9,10 +9,12 @@ namespace WebStore.Controllers;
 public class EmployersController : Controller
 {
     private readonly IEmployerData _employerData;
+    private readonly ILogger<EmployersController> _logger;
 
-    public EmployersController(IEmployerData employerData)
+    public EmployersController(IEmployerData employerData, ILogger<EmployersController> logger)
     {
         _employerData = employerData;
+        _logger = logger;
     }
 
     // GET
@@ -20,7 +22,9 @@ public class EmployersController : Controller
     {
         return View(_employerData.GetAll());
     }
-    
+
+    public IActionResult Create() => View("Edit", new EmployerEditViewModel());
+
     public IActionResult Details(int id)
     {
         var employer = _employerData.GetById(id);
@@ -30,9 +34,14 @@ public class EmployersController : Controller
         return View(employer);
     }
 
-    public IActionResult Edit(int id)
+    public IActionResult Edit(int? id)
     {
-        var employer = _employerData.GetById(id);
+        if (id is null)
+        {
+            _logger.LogWarning("Создание нового работника");
+            return View(new EmployerEditViewModel());
+        }
+        var employer = _employerData.GetById((int)id);
         if (employer is null)
             return NotFound();
         var model = new EmployerEditViewModel()
@@ -50,13 +59,35 @@ public class EmployersController : Controller
     public IActionResult Edit(EmployerEditViewModel model)
     {
        var employer = new Employer(model.ID,model.LastName,model.FirstName, model.MiddleName, model.Age, model.TelephoneNumber, model.City);
-       if (!_employerData.Edit(employer))
+       if (model.ID==0) _employerData.Add(employer);
+       else if (!_employerData.Edit(employer))
            return NotFound();
+       _logger.LogWarning("Редактирование работника: {0}", employer.FirstName);
        return RedirectToAction("Index");
     }
 
     public IActionResult Delete(int id)
     {
-        return View();
+        var employer = _employerData.GetById(id);
+        if (employer is null)
+            return NotFound();
+        var model = new EmployerEditViewModel()
+        {
+            ID = employer.ID,
+            Age = employer.Age,
+            FirstName = employer.FirstName,
+            LastName = employer.LastName,
+            MiddleName = employer.MiddleName,
+        };
+        return View(model);
+    }
+
+    [HttpPost]
+    public IActionResult DeleteConfirmed(int id)
+    {
+        if (!_employerData.Delete(id))
+            return NotFound();
+        _logger.LogError("Удаление работника {0}", id);
+        return RedirectToAction("Index");
     }
 }
