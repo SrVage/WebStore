@@ -1,28 +1,29 @@
 using Microsoft.AspNetCore.Mvc;
 using WebStore.Data;
 using WebStore.Models;
+using WebStore.Services.Interfaces;
 using WebStore.ViewModels;
 
 namespace WebStore.Controllers;
 
 public class EmployersController : Controller
 {
-    private readonly ICollection<Employer> _employers;
+    private readonly IEmployerData _employerData;
 
-    public EmployersController()
+    public EmployersController(IEmployerData employerData)
     {
-        _employers = TestData.Employers;
+        _employerData = employerData;
     }
 
     // GET
     public IActionResult Index()
     {
-        return View(_employers);
+        return View(_employerData.GetAll());
     }
     
     public IActionResult Details(int id)
     {
-        var employer = _employers.FirstOrDefault(e => e.ID == id);
+        var employer = _employerData.GetById(id);
         if (employer is null)
             return NotFound();
         ViewBag.SelectedEmployer = employer;
@@ -31,7 +32,7 @@ public class EmployersController : Controller
 
     public IActionResult Edit(int id)
     {
-        var employer = _employers.FirstOrDefault(e => e.ID == id);
+        var employer = _employerData.GetById(id);
         if (employer is null)
             return NotFound();
         var model = new EmployerEditViewModel()
@@ -45,9 +46,13 @@ public class EmployersController : Controller
         return View(model);
     }
 
+    [HttpPost]
     public IActionResult Edit(EmployerEditViewModel model)
     {
-        return RedirectToAction("Index");
+       var employer = new Employer(model.ID,model.LastName,model.FirstName, model.MiddleName, model.Age, model.TelephoneNumber, model.City);
+       if (!_employerData.Edit(employer))
+           return NotFound();
+       return RedirectToAction("Index");
     }
 
     public IActionResult Delete(int id)
