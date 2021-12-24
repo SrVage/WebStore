@@ -1,6 +1,10 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using WebStore.Services;
+using WebStore.Services.Interfaces;
+
+var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 services.AddControllersWithViews();
+services.AddSingleton<IEmployerData, EmployerDataMemoryService>();
 
 var app = builder.Build();
 
