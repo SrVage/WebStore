@@ -58,12 +58,14 @@ public class EmployersController : Controller
     [HttpPost]
     public IActionResult Edit(EmployerEditViewModel model)
     {
-       var employer = new Employer(model.ID,model.LastName,model.FirstName, model.MiddleName, model.Age, model.TelephoneNumber, model.City);
-       if (model.ID==0) _employerData.Add(employer);
-       else if (!_employerData.Edit(employer))
-           return NotFound();
-       _logger.LogWarning("Редактирование работника: {0}", employer.FirstName);
-       return RedirectToAction("Index");
+        if (!ModelState.IsValid)
+            return View(model);
+        var employer = new Employer(model.ID,model.LastName,model.FirstName, model.MiddleName, model.Age, model.TelephoneNumber, model.City);
+        if (model.ID==0) _employerData.Add(employer);
+        else if (!_employerData.Edit(employer))
+            return NotFound();
+        _logger.LogWarning("Редактирование работника: {0}", employer.FirstName);
+        return RedirectToAction("Index");
     }
 
     public IActionResult Delete(int id)
