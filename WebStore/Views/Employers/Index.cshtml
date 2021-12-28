@@ -2,9 +2,9 @@
 
 @{
     ViewData["Title"] = "Cписок сотрудников";
+    Layout = "_LayoutContainer";
 }
 
-<div class="container">
     <h3>Работники предприятия</h3>
     <a class="btn btn-default" asp-action="Create">Создать</a>
     @if (Model.Any())
@@ -37,4 +37,3 @@
   {
       <p>Сотрудников нет</p>
   }
-</div>
