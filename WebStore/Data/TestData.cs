@@ -58,4 +58,20 @@ public static class TestData
             new Section { ID = 29, Name = "Сумки", Order = 8 },
             new Section { ID = 30, Name = "Обувь", Order = 9 },
         };
+        
+        public static IEnumerable<Product> Products { get; } = new[]
+        {
+            new Product { ID = 1, Name = "Белое платье", Price = 1025, ImageURL = "product1.jpg", Order = 0, SectionID = 2, BrandID = 1 },
+            new Product { ID = 2, Name = "Розовое платье", Price = 1025, ImageURL = "product2.jpg", Order = 1, SectionID = 2, BrandID = 1 },
+            new Product { ID = 3, Name = "Красное платье", Price = 1025, ImageURL = "product3.jpg", Order = 2, SectionID = 2, BrandID = 1 },
+            new Product { ID = 4, Name = "Джинсы", Price = 1025, ImageURL = "product4.jpg", Order = 3, SectionID = 2, BrandID = 1 },
+            new Product { ID = 5, Name = "Лёгкая майка", Price = 1025, ImageURL = "product5.jpg", Order = 4, SectionID = 2, BrandID = 2 },
+            new Product { ID = 6, Name = "Лёгкое голубое поло", Price = 1025, ImageURL = "product6.jpg", Order = 5, SectionID = 2, BrandID = 1 },
+            new Product { ID = 7, Name = "Платье белое", Price = 1025, ImageURL = "product7.jpg", Order = 6, SectionID = 2, BrandID = 1 },
+            new Product { ID = 8, Name = "Костюм кролика", Price = 1025, ImageURL = "product8.jpg", Order = 7, SectionID = 25, BrandID = 1 },
+            new Product { ID = 9, Name = "Красное китайское платье", Price = 1025, ImageURL = "product9.jpg", Order = 8, SectionID = 25, BrandID = 1 },
+            new Product { ID = 10, Name = "Женские джинсы", Price = 1025, ImageURL = "product10.jpg", Order = 9, SectionID = 25, BrandID = 3 },
+            new Product { ID = 11, Name = "Джинсы женские", Price = 1025, ImageURL = "product11.jpg", Order = 10, SectionID = 25, BrandID = 3 },
+            new Product { ID = 12, Name = "Летний костюм", Price = 1025, ImageURL = "product12.jpg", Order = 11, SectionID = 25, BrandID = 3 },
+        };
 }
