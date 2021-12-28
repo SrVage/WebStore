@@ -12,9 +12,9 @@ public class InMemoryProductData:IProductData
     public IEnumerable<Product> GetProduct(ProductFilter productFilter)
     {
         IEnumerable<Product> query = TestData.Products;
-        if (productFilter is {SectionID: var sectionId})
+        if (productFilter?.SectionID is {} sectionId)
             query = query.Where(p => p.SectionID == sectionId);
-        if (productFilter is {BrandID: var brandId})
+        if (productFilter?.BrandID is {} brandId)
             query = query.Where(p => p.BrandID == brandId);
         return query;
     }
