@@ -1,9 +1,9 @@
 @model WebStore.Models.Employer
 @{
     ViewData["Title"] = "Информация о сотруднике";
+    Layout = "_LayoutContainer";
 }
-<div class="container">
-    <div>
+<div>
         <h4>Сотрудник - @ViewBag.SelectedEmployer.FirstName</h4>
         <dl class="row">
             <dt class = "col-sm-2">
@@ -50,6 +50,5 @@
             </dd>
         </dl>
     </div>
-</div>
 
 

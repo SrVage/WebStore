@@ -5,7 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 services.AddControllersWithViews();
 services.AddSingleton<IEmployerData, EmployerDataMemoryService>();
-
+services.AddSingleton<IProductData, InMemoryProductData>();
 var app = builder.Build();
 
 app.UseStaticFiles();
