@@ -21,6 +21,7 @@
   <ItemGroup>
     <PackageReference Include="FontAwesome" Version="4.0.3" />
     <PackageReference Include="jQuery" Version="1.10.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="6.0.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.1" />
   </ItemGroup>
   <ItemGroup>
