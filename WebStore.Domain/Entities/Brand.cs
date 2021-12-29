@@ -1,10 +1,11 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 using WebStore.Domain.Entities.Base;
 using WebStore.Domain.Entities.Base.Interfaces;
 
 namespace WebStore.Domain.Entities;
-
-[Table("Brandz")]
+[Index(nameof(Name), IsUnique = true)]
+//[Table("Brandz")]
 public class Brand:NamedEntity, IOrderedEntity
 {
     [Column("Brand Order")]
