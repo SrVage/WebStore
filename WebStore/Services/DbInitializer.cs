@@ -53,6 +53,7 @@ namespace WebStore.Services
                 await _dataBase.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Sections] ON", cancel);
                 await _dataBase.SaveChangesAsync(cancel);
                 await _dataBase.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Sections] OFF", cancel);
+                await _dataBase.Database.CommitTransactionAsync(cancel);
             }
 
             await using (await _dataBase.Database.BeginTransactionAsync(cancel))
@@ -61,6 +62,7 @@ namespace WebStore.Services
                 await _dataBase.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Brands] ON", cancel);
                 await _dataBase.SaveChangesAsync(cancel);
                 await _dataBase.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Brands] OFF", cancel);
+                await _dataBase.Database.CommitTransactionAsync(cancel);
             }
             await using (await _dataBase.Database.BeginTransactionAsync(cancel))
             {
@@ -68,6 +70,7 @@ namespace WebStore.Services
                 await _dataBase.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Products] ON", cancel);
                 await _dataBase.SaveChangesAsync(cancel);
                 await _dataBase.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Products] OFF", cancel);
+                await _dataBase.Database.CommitTransactionAsync(cancel);
             }
             _logger.LogInformation("Инициализация тестовых данных завершена");
         }
