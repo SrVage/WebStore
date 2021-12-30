@@ -2,6 +2,7 @@
 using WebStore.DAL.Context;
 using WebStore.Services;
 using WebStore.Services.InMemory;
+using WebStore.Services.InSQL;
 using WebStore.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,7 +12,8 @@ services.AddDbContext<WebStoreDB>(o
     => o.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
 services.AddTransient<IDbInitializer, DbInitializer>();
 services.AddSingleton<IEmployerData, EmployerDataMemoryService>();
-services.AddSingleton<IProductData, InMemoryProductData>();
+//services.AddSingleton<IProductData, InMemoryProductData>();
+services.AddScoped<IProductData, SqlProductData>();
 var app = builder.Build();
 
 await using (var scope = app.Services.CreateAsyncScope())
