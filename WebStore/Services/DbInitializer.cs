@@ -72,6 +72,14 @@ namespace WebStore.Services
                 await _dataBase.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Products] OFF", cancel);
                 await _dataBase.Database.CommitTransactionAsync(cancel);
             }
+            await using (await _dataBase.Database.BeginTransactionAsync(cancel))
+            {
+                await _dataBase.Employers.AddRangeAsync(TestData.Employers, cancel);
+                await _dataBase.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Products] ON", cancel);
+                await _dataBase.SaveChangesAsync(cancel);
+                await _dataBase.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Products] OFF", cancel);
+                await _dataBase.Database.CommitTransactionAsync(cancel);
+            }
             _logger.LogInformation("Инициализация тестовых данных завершена");
         }
     }

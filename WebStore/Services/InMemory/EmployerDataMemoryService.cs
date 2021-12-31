@@ -4,7 +4,7 @@ using WebStore.Services.Interfaces;
 
 namespace WebStore.Services.InMemory;
 
-public class EmployerDataMemoryService : IEmployerData
+/*public class EmployerDataMemoryService : IEmployerData
 {
     private readonly ICollection<Employer> _employers;
     private int _maxID;
@@ -57,4 +57,4 @@ public class EmployerDataMemoryService : IEmployerData
         _employers.Remove(employerFromDB);
         return true;
     }
-}
+}*/

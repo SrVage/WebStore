@@ -1,16 +1,16 @@
 using WebStore.Domain.Entities;
-using WebStore.Models;
+//using WebStore.Models;
 
 namespace WebStore.Data;
 
 public static class TestData
 {
-    public static List<Employer> Employers { get; } = new()
+    public static IEnumerable<Employer> Employers { get; } = new[]
     {
-        new Employer(1, "Петров", "Иван", "Федорович", 36, 5453421, "Москва"),
-        new Employer(2, "Сидоров", "Кирилл", "Андреевич", 32, 5423447, "Королев"),
-        new Employer(3, "Васин", "Александр", "Алексеевич", 41, 2543724, "Владимир"),
-        new Employer(4, "Вениминов", "Илья", "Альбертович", 26, 3373227, "Краснодар"),
+        new Employer {ID=1, LastName="Петров", FirstName="Иван", MiddleName="Федорович", Age = 36, TelephoneNumber=5453421, City="Москва" },
+        new Employer {ID=2, LastName="Сидоров", FirstName="Кирилл", MiddleName="Андреевич", Age =32, TelephoneNumber=5423447, City="Королев" },
+        new Employer {ID=3, LastName="Васин", FirstName="Александр", MiddleName="Алексеевич", Age =41, TelephoneNumber=2543724, City="Владимир" },
+        new Employer {ID=4, LastName="Вениминов", FirstName="Илья", MiddleName="Альбертович", Age =26, TelephoneNumber=3373227, City="Краснодар" },
     };
 
     public static IEnumerable<Brand> Brands { get; } = new[]
