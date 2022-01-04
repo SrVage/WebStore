@@ -2,9 +2,9 @@ using WebStore.Data;
 using WebStore.Models;
 using WebStore.Services.Interfaces;
 
-namespace WebStore.Services;
+namespace WebStore.Services.InMemory;
 
-public class EmployerDataMemoryService:IEmployerData
+/*public class EmployerDataMemoryService : IEmployerData
 {
     private readonly ICollection<Employer> _employers;
     private int _maxID;
@@ -17,7 +17,7 @@ public class EmployerDataMemoryService:IEmployerData
 
     public IEnumerable<Employer> GetAll() => _employers;
 
-    public Employer? GetById(int id) 
+    public Employer? GetById(int id)
         => _employers.FirstOrDefault(employer => employer.ID == id);
 
     public int Add(Employer employer)
@@ -57,4 +57,4 @@ public class EmployerDataMemoryService:IEmployerData
         _employers.Remove(employerFromDB);
         return true;
     }
-}
+}*/

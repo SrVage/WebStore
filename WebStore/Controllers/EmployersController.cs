@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WebStore.Data;
-using WebStore.Models;
+using WebStore.Domain.Entities;
+//using WebStore.Models;
 using WebStore.Services.Interfaces;
 using WebStore.ViewModels;
 
@@ -60,7 +61,7 @@ public class EmployersController : Controller
     {
         if (!ModelState.IsValid)
             return View(model);
-        var employer = new Employer(model.ID,model.LastName,model.FirstName, model.MiddleName, model.Age, model.TelephoneNumber, model.City);
+        var employer = new Employer {ID = model.ID, LastName = model.LastName, FirstName = model.FirstName, MiddleName = model.MiddleName, Age = model.Age, TelephoneNumber = model.TelephoneNumber, City = model.City };
         if (model.ID==0) _employerData.Add(employer);
         else if (!_employerData.Edit(employer))
             return NotFound();
