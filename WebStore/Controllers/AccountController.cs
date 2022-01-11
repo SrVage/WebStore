@@ -17,7 +17,7 @@ namespace WebStore.Controllers
         }
 
         public IActionResult Register() => View(new RegisterUserViewModel());
-        [HttpPost]
+        [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterUserViewModel model)
         {
             if (!ModelState.IsValid)
@@ -39,7 +39,7 @@ namespace WebStore.Controllers
             return View(model);
         }
         public IActionResult Login(string returnUrl) => View(new LoginUserViewModel { ReturnUrl = returnUrl});
-        [HttpPost]
+        [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginUserViewModel model)
         {
             if (!ModelState.IsValid)
