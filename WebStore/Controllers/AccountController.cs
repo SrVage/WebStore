@@ -17,7 +17,7 @@ namespace WebStore.Controllers
         }
 
         public IActionResult Register() => View(new RegisterUserViewModel());
-
+        [HttpPost]
         public async Task<IActionResult> Register(RegisterUserViewModel model)
         {
             if (!ModelState.IsValid)
@@ -56,7 +56,12 @@ namespace WebStore.Controllers
             ModelState.AddModelError("", "Неверное имя пользователя и пароль");
             return View(model);
         }
-        public IActionResult Logout() => RedirectToAction("Index", "Home");
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+
         public IActionResult AccessDenied() => View();
         
     }
