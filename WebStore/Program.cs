@@ -59,6 +59,8 @@ await using (var scope = app.Services.CreateAsyncScope())
 
 app.UseStaticFiles();
 app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
 
 //app.MapGet("/", () => "Hello World!");
 //app.MapDefaultControllerRoute();
