@@ -26,7 +26,8 @@ namespace WebStore.Services
                 await _dataBase.Database.MigrateAsync(cancel).ConfigureAwait(false);
             }
             
-            await InitializeProductAsync(cancel);
+            await InitializeProductAsync(cancel).ConfigureAwait(false);
+            await InitializeEmployersAsync(cancel).ConfigureAwait(false) ;
             _logger.LogInformation("Инициализация базы данных");
         }
 
@@ -72,15 +73,27 @@ namespace WebStore.Services
                 await _dataBase.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Products] OFF", cancel);
                 await _dataBase.Database.CommitTransactionAsync(cancel);
             }
-            await using (await _dataBase.Database.BeginTransactionAsync(cancel))
-            {
-                await _dataBase.Employers.AddRangeAsync(TestData.Employers, cancel);
-                await _dataBase.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Products] ON", cancel);
-                await _dataBase.SaveChangesAsync(cancel);
-                await _dataBase.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Products] OFF", cancel);
-                await _dataBase.Database.CommitTransactionAsync(cancel);
-            }
             _logger.LogInformation("Инициализация тестовых данных завершена");
+        }
+
+        private async Task InitializeEmployersAsync(CancellationToken cancel)
+        {
+            if (await _dataBase.Employers.AnyAsync(cancel))
+            {
+                _logger.LogInformation("Инициализация сотрудников не требуется");
+                return;
+            }
+
+            _logger.LogInformation("Инициализация сотрудников...");
+            await using var transaction = await _dataBase.Database.BeginTransactionAsync(cancel);
+
+            TestData.Employers.ForEach(e => e.ID = 0);
+
+            await _dataBase.Employers.AddRangeAsync(TestData.Employers, cancel);
+            await _dataBase.SaveChangesAsync(cancel);
+
+            await transaction.CommitAsync(cancel);
+            _logger.LogInformation("Инициализация сотрудников выполнена успешно");
         }
     }
 }

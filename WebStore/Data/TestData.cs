@@ -5,7 +5,7 @@ namespace WebStore.Data;
 
 public static class TestData
 {
-    public static IEnumerable<Employer> Employers { get; } = new[]
+    public static List<Employer> Employers { get; } = new()
     {
         new Employer {ID=1, LastName="Петров", FirstName="Иван", MiddleName="Федорович", Age = 36, TelephoneNumber=5453421, City="Москва" },
         new Employer {ID=2, LastName="Сидоров", FirstName="Кирилл", MiddleName="Андреевич", Age =32, TelephoneNumber=5423447, City="Королев" },
