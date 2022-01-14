@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebStore.DAL.Context;
 
@@ -11,9 +12,10 @@ using WebStore.DAL.Context;
 namespace WebStore.DAL.Migrations
 {
     [DbContext(typeof(WebStoreDB))]
-    partial class WebStoreDBModelSnapshot : ModelSnapshot
+    [Migration("20220109132322_Identity")]
+    partial class Identity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -179,10 +181,16 @@ namespace WebStore.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("TelephoneNumber")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("Name");
 
                     b.ToTable("Employers");
                 });

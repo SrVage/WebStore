@@ -3,10 +3,8 @@ using WebStore.Domain.Entities.Base;
 
 namespace WebStore.Domain.Entities
 {
-    [Index(nameof(Name))]
-    public class Employer : NamedEntity
+    public class Employer : Entity
     {
-        public int ID { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
