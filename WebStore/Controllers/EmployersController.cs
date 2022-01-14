@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebStore.Data;
 using WebStore.Domain.Entities;
+using WebStore.Domain.Entities.Identity;
 //using WebStore.Models;
 using WebStore.Services.Interfaces;
 using WebStore.ViewModels;
@@ -24,7 +25,7 @@ public class EmployersController : Controller
     {
         return View(_employerData.GetAll());
     }
-
+    [Authorize(Roles = Role.Administrators)]
     public IActionResult Create() => View("Edit", new EmployerEditViewModel());
 
     public IActionResult Details(int id)
@@ -35,7 +36,7 @@ public class EmployersController : Controller
         ViewBag.SelectedEmployer = employer;
         return View(employer);
     }
-
+    [Authorize(Roles =Role.Administrators)]
     public IActionResult Edit(int? id)
     {
         if (id is null)
@@ -69,7 +70,7 @@ public class EmployersController : Controller
         _logger.LogWarning("Редактирование работника: {0}", employer.FirstName);
         return RedirectToAction("Index");
     }
-
+    [Authorize(Roles = Role.Administrators)]
     public IActionResult Delete(int id)
     {
         var employer = _employerData.GetById(id);
@@ -87,6 +88,7 @@ public class EmployersController : Controller
     }
 
     [HttpPost]
+    [Authorize(Roles = Role.Administrators)]
     public IActionResult DeleteConfirmed(int id)
     {
         if (!_employerData.Delete(id))
