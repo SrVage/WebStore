@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using NuGet.Protocol;
 using WebStore.Domain;
+using WebStore.Infrastructure.Mapping;
 using WebStore.Services.Interfaces;
 using WebStore.ViewModels;
 
@@ -26,14 +27,16 @@ public class CatalogController : Controller
         {
             BrandID = brandID,
             SectionID = sectionID,
-            Products = products.OrderBy(p=>p.Order).Select(p=>new ProductViewModel
-            {
-                ID = p.ID,
-                Name = p.Name,
-                Price = p.Price,
-                ImageURL = p.ImageURL
-            })
+            Products = products.OrderBy(p=>p.Order).ToView()
         };
         return View(catalogModel);
+    }
+
+    public IActionResult Details(int ID)
+    {
+        var product = _productData.GetProductByID(ID);
+        if (product is null)
+            return NotFound();
+        return View(product.ToView());
     }
 }
