@@ -70,7 +70,7 @@ namespace WebStore.Services.InCookies
 			if (item is null)
 				return;
 			if (item.Quantity > 0)
-				item.Quantity++;
+				item.Quantity--;
 			if (item.Quantity <= 0)
 				cart.Items.Remove(item);
 			Cart = cart;
