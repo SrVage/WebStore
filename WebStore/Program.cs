@@ -5,6 +5,7 @@ using WebStore.Services;
 using WebStore.Services.InSQL;
 using WebStore.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using WebStore.Services.InCookies;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -49,6 +50,7 @@ services.AddTransient<IEmployerData, SqlEmployerData>();
 
 //services.AddSingleton<IProductData, InMemoryProductData>();
 services.AddScoped<IProductData, SqlProductData>();
+services.AddScoped<ICartService, InCookiesCartService>();
 var app = builder.Build();
 
 await using (var scope = app.Services.CreateAsyncScope())

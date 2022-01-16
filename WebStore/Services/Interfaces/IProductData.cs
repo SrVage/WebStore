@@ -9,4 +9,6 @@ public interface IProductData
     IEnumerable<Brand> GetBrand();
 
     IEnumerable<Product> GetProduct(ProductFilter? productFilter = null);
+
+    Product? GetProductByID(int ID);
 }
