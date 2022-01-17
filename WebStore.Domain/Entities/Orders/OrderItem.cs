@@ -8,10 +8,10 @@ namespace WebStore.Domain.Entities.Orders
     {
         [Required]
         public Product Product { get; set; } = null!;
-        [Column(TypeName ="decimal(18,2")]
+        [Column(TypeName ="decimal(18,2)")]
         public decimal Price { get; set; }
         public int Quantity { get; set; }
-        public Order Order { get; set; }
+        public Order Order { get; set; } = null!;
         [NotMapped]
         public decimal TotalItemsPrice => Price * Quantity;
     }
