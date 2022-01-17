@@ -63,11 +63,17 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-
-//app.MapGet("/", () => "Hello World!");
-//app.MapDefaultControllerRoute();
-app.MapControllerRoute(
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+      name: "areas",
+      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+    );
+    endpoints.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+});
+//app.MapGet("/", () => "Hello World!");
+//app.MapDefaultControllerRoute();
 app.Run();
 
