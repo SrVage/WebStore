@@ -50,7 +50,9 @@ services.AddTransient<IEmployerData, SqlEmployerData>();
 
 //services.AddSingleton<IProductData, InMemoryProductData>();
 services.AddScoped<IProductData, SqlProductData>();
+services.AddScoped<IOrderService, SqlOrderService>();
 services.AddScoped<ICartService, InCookiesCartService>();
+
 var app = builder.Build();
 
 await using (var scope = app.Services.CreateAsyncScope())
