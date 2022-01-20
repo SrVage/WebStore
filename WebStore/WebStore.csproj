@@ -32,6 +32,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.1" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\WebStore.DAL.Sqlite\WebStore.DAL.Sqlite.csproj" />
     <ProjectReference Include="..\WebStore.DAL\WebStore.DAL.csproj" />
     <ProjectReference Include="..\WebStore.Domain\WebStore.Domain.csproj" />
   </ItemGroup>

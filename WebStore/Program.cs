@@ -10,8 +10,18 @@ using WebStore.Services.InCookies;
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 services.AddControllersWithViews();
-services.AddDbContext<WebStoreDB>(o 
+var databaseType = builder.Configuration["Database"];
+switch (databaseType)
+{
+    case "SqlServer":
+        services.AddDbContext<WebStoreDB>(o
     => o.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
+        break;
+    case "Sqlite":
+        services.AddDbContext<WebStoreDB>(o
+    => o.UseSqlite(builder.Configuration.GetConnectionString("Sqlite"), o=> o.MigrationsAssembly("WebStore.DAL.Sqlite")));
+        break;
+}
 services.AddTransient<IDbInitializer, DbInitializer>();
 services.AddIdentity<User, Role>()
     .AddEntityFrameworkStores<WebStoreDB>()
