@@ -3,7 +3,6 @@ using NuGet.Protocol;
 using WebStore.Domain;
 using WebStore.Infrastructure.Mapping;
 using WebStore.Services.Interfaces;
-using WebStore.ViewModels;
 
 namespace WebStore.Controllers;
 
