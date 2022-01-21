@@ -10,8 +10,18 @@ using WebStore.Services.InCookies;
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 services.AddControllersWithViews();
-services.AddDbContext<WebStoreDB>(o 
+var databaseType = builder.Configuration["Database"];
+switch (databaseType)
+{
+    case "SqlServer":
+        services.AddDbContext<WebStoreDB>(o
     => o.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
+        break;
+    case "Sqlite":
+        services.AddDbContext<WebStoreDB>(o
+    => o.UseSqlite(builder.Configuration.GetConnectionString("Sqlite"), o=> o.MigrationsAssembly("WebStore.DAL.Sqlite")));
+        break;
+}
 services.AddTransient<IDbInitializer, DbInitializer>();
 services.AddIdentity<User, Role>()
     .AddEntityFrameworkStores<WebStoreDB>()
@@ -50,7 +60,9 @@ services.AddTransient<IEmployerData, SqlEmployerData>();
 
 //services.AddSingleton<IProductData, InMemoryProductData>();
 services.AddScoped<IProductData, SqlProductData>();
+services.AddScoped<IOrderService, SqlOrderService>();
 services.AddScoped<ICartService, InCookiesCartService>();
+
 var app = builder.Build();
 
 await using (var scope = app.Services.CreateAsyncScope())
@@ -63,11 +75,17 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-
-//app.MapGet("/", () => "Hello World!");
-//app.MapDefaultControllerRoute();
-app.MapControllerRoute(
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+      name: "areas",
+      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+    );
+    endpoints.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+});
+//app.MapGet("/", () => "Hello World!");
+//app.MapDefaultControllerRoute();
 app.Run();
 
