@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31424.327
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{2AC73C3B-C9EB-487D-9A59-055054129D3D}"
 EndProject
@@ -18,6 +18,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStore.DAL.Sqlite", "Data\WebStore.DAL.Sqlite\WebStore.DAL.Sqlite.csproj", "{9016C941-CE4B-4B7D-96A2-8A7D9FDAADED}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStore", "UI\WebStore\WebStore.csproj", "{5458B95C-38A5-45B7-8B2C-16CE76390306}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebStore.Interfaces", "Services\WebStore.Interfaces\WebStore.Interfaces.csproj", "{A4C1D1C0-E521-486A-B495-D14CB3502F5F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebStore.Services", "Services\WebStore.Services\WebStore.Services.csproj", "{2FE1CFD5-A9FA-4A0D-BC7E-BE491755CE98}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +45,14 @@ Global
 		{5458B95C-38A5-45B7-8B2C-16CE76390306}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5458B95C-38A5-45B7-8B2C-16CE76390306}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5458B95C-38A5-45B7-8B2C-16CE76390306}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4C1D1C0-E521-486A-B495-D14CB3502F5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4C1D1C0-E521-486A-B495-D14CB3502F5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4C1D1C0-E521-486A-B495-D14CB3502F5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4C1D1C0-E521-486A-B495-D14CB3502F5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FE1CFD5-A9FA-4A0D-BC7E-BE491755CE98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FE1CFD5-A9FA-4A0D-BC7E-BE491755CE98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FE1CFD5-A9FA-4A0D-BC7E-BE491755CE98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FE1CFD5-A9FA-4A0D-BC7E-BE491755CE98}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +62,8 @@ Global
 		{E63C9006-B1A0-4B53-ABBE-D9377EA1D2F0} = {E76697F6-566F-4980-8A4E-AD4237713302}
 		{9016C941-CE4B-4B7D-96A2-8A7D9FDAADED} = {E76697F6-566F-4980-8A4E-AD4237713302}
 		{5458B95C-38A5-45B7-8B2C-16CE76390306} = {2AC73C3B-C9EB-487D-9A59-055054129D3D}
+		{A4C1D1C0-E521-486A-B495-D14CB3502F5F} = {BBFA0113-CC23-4577-8D0E-00E750484ABB}
+		{2FE1CFD5-A9FA-4A0D-BC7E-BE491755CE98} = {BBFA0113-CC23-4577-8D0E-00E750484ABB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82DFC9AD-2EA1-4C8C-BF85-AF991AE04B67}

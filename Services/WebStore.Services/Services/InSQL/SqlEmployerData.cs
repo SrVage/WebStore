@@ -1,9 +1,9 @@
 ﻿using WebStore.DAL.Context;
 using WebStore.Domain.Entities;
+using WebStore.Interfaces.Services;
 //using WebStore.Models;
-using WebStore.Services.Interfaces;
 
-namespace WebStore.Services.InSQL
+namespace WebStore.Services.Services.InSQL
 {
     public class SqlEmployerData : IEmployerData
     {

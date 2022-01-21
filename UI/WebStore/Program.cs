@@ -2,10 +2,11 @@
 using WebStore.DAL.Context;
 using WebStore.Domain.Entities.Identity;
 using WebStore.Services;
-using WebStore.Services.InSQL;
-using WebStore.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
-using WebStore.Services.InCookies;
+using WebStore.Interfaces.Services;
+using WebStore.Services.Services;
+using WebStore.Services.Services.InCookies;
+using WebStore.Services.Services.InSQL;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
