@@ -3,7 +3,7 @@ using WebStore.Interfaces.TestAPI;
 using WebStore.WepAPI.Clients.Base;
 
 namespace WebStore.WepAPI.Clients.Values;
-internal class ValuesClient : BaseClient, IValuesService
+public class ValuesClient : BaseClient, IValuesService
 {
     private HttpClient _client;
 
