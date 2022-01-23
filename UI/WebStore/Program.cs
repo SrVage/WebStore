@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WebStore.DAL.Context;
 using WebStore.Domain.Entities.Identity;
-using WebStore.Services;
 using Microsoft.AspNetCore.Identity;
 using WebStore.Interfaces.Services;
 using WebStore.Services.Services;
@@ -60,8 +59,6 @@ services.ConfigureApplicationCookie(opt =>
 });
 
 services.AddTransient<IEmployerData, SqlEmployerData>();
-
-//services.AddSingleton<IProductData, InMemoryProductData>();
 services.AddScoped<IProductData, SqlProductData>();
 services.AddScoped<IOrderService, SqlOrderService>();
 services.AddScoped<ICartService, InCookiesCartService>();
