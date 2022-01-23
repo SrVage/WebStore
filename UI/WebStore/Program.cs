@@ -7,6 +7,8 @@ using WebStore.Interfaces.Services;
 using WebStore.Services.Services;
 using WebStore.Services.Services.InCookies;
 using WebStore.Services.Services.InSQL;
+using WebStore.Interfaces.TestAPI;
+using WebStore.WepAPI.Clients.Values;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -63,6 +65,8 @@ services.AddTransient<IEmployerData, SqlEmployerData>();
 services.AddScoped<IProductData, SqlProductData>();
 services.AddScoped<IOrderService, SqlOrderService>();
 services.AddScoped<ICartService, InCookiesCartService>();
+var configuration = builder.Configuration;
+services.AddHttpClient<IValuesService, ValuesClient>(client => client.BaseAddress=new(configuration["WebAPI"]));
 
 var app = builder.Build();
 
