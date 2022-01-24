@@ -36,8 +36,8 @@ namespace WebStore.WebAPI.Controllers
         [HttpPut]
         public IActionResult Update(Employer employer)
         {
-            _employerData.Edit(employer);
-            return Ok();
+            var success = _employerData.Edit(employer);
+            return Ok(success);
         }
         [HttpDelete("{ID}")]
         public IActionResult Delete(int ID)
