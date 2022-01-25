@@ -28,14 +28,7 @@ switch (databaseType)
         break;
 }
 services.AddTransient<IDbInitializer, DbInitializer>();
-var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
 services.AddIdentity<User, Role>()
     .AddEntityFrameworkStores<WebStoreDB>()
     .AddDefaultTokenProviders();
@@ -56,9 +49,17 @@ services.Configure<IdentityOptions>(opt =>
     opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
 });
 
-services.AddTransient<IEmployerData, SqlEmployerData>();
+services.AddScoped<IEmployerData, SqlEmployerData>();
 services.AddScoped<IProductData, SqlProductData>();
 services.AddScoped<IOrderService, SqlOrderService>();
+
+var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.UseAuthorization();
 

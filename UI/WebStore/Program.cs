@@ -5,9 +5,11 @@ using Microsoft.AspNetCore.Identity;
 using WebStore.Interfaces.Services;
 using WebStore.Services.Services;
 using WebStore.Services.Services.InCookies;
-using WebStore.Services.Services.InSQL;
 using WebStore.Interfaces.TestAPI;
 using WebStore.WepAPI.Clients.Values;
+using WebStore.WepAPI.Clients.Employers;
+using WebStore.WepAPI.Clients.Products;
+using WebStore.Services.Services.InSQL;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -58,12 +60,14 @@ services.ConfigureApplicationCookie(opt =>
     opt.SlidingExpiration = true;
 });
 
-services.AddTransient<IEmployerData, SqlEmployerData>();
-services.AddScoped<IProductData, SqlProductData>();
+//services.AddTransient<IEmployerData, SqlEmployerData>();
+//services.AddScoped<IProductData, SqlProductData>();
 services.AddScoped<IOrderService, SqlOrderService>();
 services.AddScoped<ICartService, InCookiesCartService>();
 var configuration = builder.Configuration;
 services.AddHttpClient<IValuesService, ValuesClient>(client => client.BaseAddress=new(configuration["WebAPI"]));
+services.AddHttpClient<IEmployerData, EmployersClient>(client => client.BaseAddress=new(configuration["WebAPI"]));
+services.AddHttpClient<IProductData, ProductsClient>(client => client.BaseAddress=new(configuration["WebAPI"]));
 
 var app = builder.Build();
 
