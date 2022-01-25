@@ -1,4 +1,6 @@
-﻿using WebStore.Domain;
+﻿using System.Net.Http.Json;
+using WebStore.Domain;
+using WebStore.Domain.DTO;
 using WebStore.Domain.Entities;
 using WebStore.Interfaces.Services;
 using WebStore.WepAPI.Clients.Base;
@@ -13,37 +15,36 @@ namespace WebStore.WepAPI.Clients.Products
 
         public Product CreateProduct(string Name, int Order, decimal Price, string ImageUrl, string Section, string? Brand = null)
         {
-            throw new NotImplementedException();
+            var response = Post($"{Address}/new", new CreateProductDTO
+            {
+                Name = Name,
+                Order = Order,
+                Price = Price,
+                ImageUrl = ImageUrl,
+                Section = Section,
+                Brand = Brand,
+            });
+
+            var product = response.Content.ReadFromJsonAsync<Product>().Result;
+            return product;
         }
 
         public IEnumerable<Brand> GetBrand()
-        {
-            throw new NotImplementedException();
-        }
+            => Get<IEnumerable<Brand>>($"{Address}/brands");
 
         public Brand? GetBrandById(int Id)
-        {
-            throw new NotImplementedException();
-        }
+            => Get<Brand>($"{Address}/brand/{Id}");
 
         public IEnumerable<Product> GetProduct(ProductFilter? productFilter = null)
-        {
-            throw new NotImplementedException();
-        }
+            => Post(Address, productFilter ?? new()).Content.ReadFromJsonAsync<IEnumerable<Product>>().Result!;
 
-        public Product? GetProductByID(int ID)
-        {
-            throw new NotImplementedException();
-        }
+        public Product? GetProductByID(int ID) 
+            => Get<Product>($"{Address}/{ID}");
 
         public IEnumerable<Section> GetSection()
-        {
-            throw new NotImplementedException();
-        }
+            => Get<IEnumerable<Section>>($"{Address}/sections");
 
         public Section? GetSectionById(int Id)
-        {
-            throw new NotImplementedException();
-        }
+            => Get<Section>($"{Address}/section/{Id}");
     }
 }
