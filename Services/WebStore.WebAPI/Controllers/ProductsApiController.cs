@@ -21,7 +21,7 @@ namespace WebStore.WebAPI.Controllers
         public IActionResult GetSections()
         {
             var sections = _productData.GetSection();
-            return Ok(sections);
+            return Ok(sections.ToDTO());
         }
         [HttpGet("section/{ID}")]
         public IActionResult GetSectionByID(int ID)
@@ -29,14 +29,14 @@ namespace WebStore.WebAPI.Controllers
             var section = _productData.GetSectionById(ID);
             if (section is null) 
                 return NotFound();
-            return Ok(section);
+            return Ok(section.ToDTO());
         }
 
         [HttpGet("brands")]
         public IActionResult GetBrands()
         {
             var brands = _productData.GetBrand();
-            return Ok(brands);
+            return Ok(brands.ToDTO());
         }
 
         [HttpGet("brand/{ID}")]
@@ -45,13 +45,13 @@ namespace WebStore.WebAPI.Controllers
             var brand = _productData.GetBrandById(ID);
             if (brand is null)
                 return NotFound();
-            return Ok(brand);
+            return Ok(brand.ToDTO());
         }
         [HttpPost]
         public IActionResult GetProducts(ProductFilter? filter = null)
         {
             var products = _productData.GetProduct(filter);
-            return Ok(products);
+            return Ok(products.ToDTO());
         }
 
         [HttpGet("{ID}")]
@@ -60,13 +60,13 @@ namespace WebStore.WebAPI.Controllers
             var product = _productData.GetProductByID(ID);
             if (product is null)
                 return NotFound();
-            return Ok(product);
+            return Ok(product.ToDTO());
         }
         [HttpPost("new/{name}")]
         public IActionResult CreateProduct(CreateProductDTO model)
         {
             var product = _productData.CreateProduct(model.Name, model.Order, model.Price, model.ImageUrl, model.Section, model.Brand);
-            return CreatedAtAction(nameof(GetProductByID), new { product.ID }, product);
+            return CreatedAtAction(nameof(GetProductByID), new { product.ID }, product.ToDTO());
         }
     }
 }

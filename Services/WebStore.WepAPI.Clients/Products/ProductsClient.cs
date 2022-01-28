@@ -25,26 +25,26 @@ namespace WebStore.WepAPI.Clients.Products
                 Brand = Brand,
             });
 
-            var product = response.Content.ReadFromJsonAsync<Product>().Result;
-            return product;
+            var product = response.Content.ReadFromJsonAsync<ProductDTO>().Result;
+            return product.FromDTO()!;
         }
 
         public IEnumerable<Brand> GetBrand()
-            => Get<IEnumerable<Brand>>($"{Address}/brands");
+            => Get<IEnumerable<BrandDTO>>($"{Address}/brands")!.FromDTO()!;
 
         public Brand? GetBrandById(int Id)
-            => Get<Brand>($"{Address}/brand/{Id}");
+            => Get<BrandDTO>($"{Address}/brand/{Id}").FromDTO();
 
         public IEnumerable<Product> GetProduct(ProductFilter? productFilter = null)
-            => Post(Address, productFilter ?? new()).Content.ReadFromJsonAsync<IEnumerable<Product>>().Result!;
+            => Post(Address, productFilter ?? new()).Content.ReadFromJsonAsync<IEnumerable<ProductDTO>>().Result!.FromDTO()!;
 
         public Product? GetProductByID(int ID) 
-            => Get<Product>($"{Address}/{ID}");
+            => Get<ProductDTO>($"{Address}/{ID}").FromDTO();
 
         public IEnumerable<Section> GetSection()
-            => Get<IEnumerable<Section>>($"{Address}/sections");
+            => Get<IEnumerable<SectionDTO>>($"{Address}/sections")!.FromDTO()!;
 
         public Section? GetSectionById(int Id)
-            => Get<Section>($"{Address}/section/{Id}");
+            => Get<SectionDTO>($"{Address}/section/{Id}").FromDTO();
     }
 }

@@ -3,8 +3,8 @@ namespace WebStore.WepAPI.Clients.Base
 {
     public abstract class BaseClient
     {
-        protected HttpClient Http { get; set; }
-        protected string Address { get; set; }
+        protected HttpClient Http { get; }
+        protected string Address { get; }
 
         protected BaseClient(HttpClient client, string address)
         {
