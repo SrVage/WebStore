@@ -1,14 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WebStore.DAL.Context;
 using WebStore.Domain.Entities.Identity;
-using WebStore.Services;
 using Microsoft.AspNetCore.Identity;
 using WebStore.Interfaces.Services;
 using WebStore.Services.Services;
 using WebStore.Services.Services.InCookies;
-using WebStore.Services.Services.InSQL;
 using WebStore.Interfaces.TestAPI;
 using WebStore.WepAPI.Clients.Values;
+using WebStore.WepAPI.Clients.Employers;
+using WebStore.WepAPI.Clients.Products;
+using WebStore.Services.Services.InSQL;
+using WebStore.WepAPI.Clients.Orders;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -59,14 +61,16 @@ services.ConfigureApplicationCookie(opt =>
     opt.SlidingExpiration = true;
 });
 
-services.AddTransient<IEmployerData, SqlEmployerData>();
-
-//services.AddSingleton<IProductData, InMemoryProductData>();
+//services.AddTransient<IEmployerData, SqlEmployerData>();
 services.AddScoped<IProductData, SqlProductData>();
 services.AddScoped<IOrderService, SqlOrderService>();
 services.AddScoped<ICartService, InCookiesCartService>();
 var configuration = builder.Configuration;
-services.AddHttpClient<IValuesService, ValuesClient>(client => client.BaseAddress=new(configuration["WebAPI"]));
+services.AddHttpClient("WebStoreAPI", client => client.BaseAddress = new(configuration["WebAPI"]))
+.AddTypedClient<IValuesService, ValuesClient>()
+.AddTypedClient<IEmployerData, EmployersClient>();
+//.AddTypedClient<IProductData, ProductsClient>()
+//.AddTypedClient<IOrderService, OrdersClient>();
 
 var app = builder.Build();
 
@@ -74,6 +78,11 @@ await using (var scope = app.Services.CreateAsyncScope())
 {
     var dataBaseInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
     await dataBaseInitializer.InitializeAsync(RemoveBefore: false);
+}
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
 }
 
 app.UseStaticFiles();
