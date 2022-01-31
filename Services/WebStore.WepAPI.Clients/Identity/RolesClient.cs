@@ -6,7 +6,7 @@ using System.Net.Http.Json;
 
 namespace WebStore.WepAPI.Clients.Identity
 {
-    internal class RolesClient : BaseClient, IRoleClient
+    public class RolesClient : BaseClient, IRoleClient
     {
         public RolesClient(HttpClient client, string address) : base(client, address)
         {

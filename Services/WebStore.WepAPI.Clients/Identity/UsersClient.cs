@@ -10,7 +10,7 @@ using WebStore.WepAPI.Clients.Base;
 
 namespace WebStore.WepAPI.Clients.Identity
 {
-    internal class UsersClient : BaseClient, IUserClient
+    public class UsersClient : BaseClient, IUserClient
     {
         public UsersClient(HttpClient client, string address) : base(client, address)
         {
