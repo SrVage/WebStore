@@ -8,7 +8,7 @@ namespace WebStore.WepAPI.Clients.Employers
 {
     public class EmployersClient : BaseClient, IEmployerData
     {
-        public EmployersClient(HttpClient client, string address) : base(client, WebAPIAddresses.Employers)
+        public EmployersClient(HttpClient client) : base(client, WebAPIAddresses.Employers)
         {
         }
 

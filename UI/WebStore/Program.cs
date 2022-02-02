@@ -75,15 +75,15 @@ services.ConfigureApplicationCookie(opt =>
 });
 
 //services.AddTransient<IEmployerData, SqlEmployerData>();
-services.AddScoped<IProductData, SqlProductData>();
-services.AddScoped<IOrderService, SqlOrderService>();
+/*services.AddScoped<IProductData, SqlProductData>();
+services.AddScoped<IOrderService, SqlOrderService>();*/
 services.AddScoped<ICartService, InCookiesCartService>();
 
 services.AddHttpClient("WebStoreAPI", client => client.BaseAddress = new(configuration["WebAPI"]))
 .AddTypedClient<IValuesService, ValuesClient>()
-.AddTypedClient<IEmployerData, EmployersClient>();
-//.AddTypedClient<IProductData, ProductsClient>()
-//.AddTypedClient<IOrderService, OrdersClient>();
+.AddTypedClient<IEmployerData, EmployersClient>()
+.AddTypedClient<IProductData, ProductsClient>()
+.AddTypedClient<IOrderService, OrdersClient>();
 
 var app = builder.Build();
 

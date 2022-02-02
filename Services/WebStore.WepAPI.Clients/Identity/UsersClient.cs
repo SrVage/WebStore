@@ -12,7 +12,7 @@ namespace WebStore.WepAPI.Clients.Identity
 {
     public class UsersClient : BaseClient, IUserClient
     {
-        public UsersClient(HttpClient client, string address) : base(client, address)
+        public UsersClient(HttpClient client) : base(client, WebAPIAddresses.Identity.Users)
         {
         }
 

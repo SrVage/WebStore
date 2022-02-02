@@ -3,12 +3,13 @@ using WebStore.Domain.Entities.Identity;
 using WebStore.Interfaces.Services.Identity;
 using WebStore.WepAPI.Clients.Base;
 using System.Net.Http.Json;
+using WebStore.Interfaces;
 
 namespace WebStore.WepAPI.Clients.Identity
 {
     public class RolesClient : BaseClient, IRoleClient
     {
-        public RolesClient(HttpClient client, string address) : base(client, address)
+        public RolesClient(HttpClient client) : base(client, WebAPIAddresses.Identity.Roles)
         {
         }
 
