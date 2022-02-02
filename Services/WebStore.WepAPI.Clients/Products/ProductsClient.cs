@@ -2,6 +2,7 @@
 using WebStore.Domain;
 using WebStore.Domain.DTO;
 using WebStore.Domain.Entities;
+using WebStore.Interfaces;
 using WebStore.Interfaces.Services;
 using WebStore.WepAPI.Clients.Base;
 
@@ -9,7 +10,7 @@ namespace WebStore.WepAPI.Clients.Products
 {
     public class ProductsClient : BaseClient, IProductData
     {
-        public ProductsClient(HttpClient client, string address) : base(client, "api/products")
+        public ProductsClient(HttpClient client) : base(client, WebAPIAddresses.Products)
         {
         }
 

@@ -2,12 +2,13 @@
 using WebStore.Interfaces.Services;
 using WebStore.WepAPI.Clients.Base;
 using System.Net.Http.Json;
+using WebStore.Interfaces;
 
 namespace WebStore.WepAPI.Clients.Employers
 {
     public class EmployersClient : BaseClient, IEmployerData
     {
-        public EmployersClient(HttpClient client, string address) : base(client, "api/employers")
+        public EmployersClient(HttpClient client) : base(client, WebAPIAddresses.Employers)
         {
         }
 

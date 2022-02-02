@@ -11,6 +11,7 @@ using WebStore.WepAPI.Clients.Employers;
 using WebStore.WepAPI.Clients.Products;
 using WebStore.Services.Services.InSQL;
 using WebStore.WepAPI.Clients.Orders;
+using WebStore.WepAPI.Clients.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -29,8 +30,20 @@ switch (databaseType)
 }
 services.AddTransient<IDbInitializer, DbInitializer>();
 services.AddIdentity<User, Role>()
-    .AddEntityFrameworkStores<WebStoreDB>()
+    //.AddEntityFrameworkStores<WebStoreDB>()
     .AddDefaultTokenProviders();
+var configuration = builder.Configuration;
+services.AddHttpClient("WebStoreAPIIdentity", client => client.BaseAddress = new(configuration["WebAPI"]))
+   .AddTypedClient<IUserStore<User>, UsersClient>()
+   .AddTypedClient<IUserRoleStore<User>, UsersClient>()
+   .AddTypedClient<IUserPasswordStore<User>, UsersClient>()
+   .AddTypedClient<IUserEmailStore<User>, UsersClient>()
+   .AddTypedClient<IUserPhoneNumberStore<User>, UsersClient>()
+   .AddTypedClient<IUserTwoFactorStore<User>, UsersClient>()
+   .AddTypedClient<IUserClaimStore<User>, UsersClient>()
+   .AddTypedClient<IUserLoginStore<User>, UsersClient>()
+   .AddTypedClient<IRoleStore<Role>, RolesClient>();
+
 services.Configure<IdentityOptions>(opt =>
 {
 #if DEBUG
@@ -62,15 +75,15 @@ services.ConfigureApplicationCookie(opt =>
 });
 
 //services.AddTransient<IEmployerData, SqlEmployerData>();
-services.AddScoped<IProductData, SqlProductData>();
-services.AddScoped<IOrderService, SqlOrderService>();
+/*services.AddScoped<IProductData, SqlProductData>();
+services.AddScoped<IOrderService, SqlOrderService>();*/
 services.AddScoped<ICartService, InCookiesCartService>();
-var configuration = builder.Configuration;
+
 services.AddHttpClient("WebStoreAPI", client => client.BaseAddress = new(configuration["WebAPI"]))
 .AddTypedClient<IValuesService, ValuesClient>()
-.AddTypedClient<IEmployerData, EmployersClient>();
-//.AddTypedClient<IProductData, ProductsClient>()
-//.AddTypedClient<IOrderService, OrdersClient>();
+.AddTypedClient<IEmployerData, EmployersClient>()
+.AddTypedClient<IProductData, ProductsClient>()
+.AddTypedClient<IOrderService, OrdersClient>();
 
 var app = builder.Build();
 
