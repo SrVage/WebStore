@@ -12,8 +12,10 @@ using WebStore.WepAPI.Clients.Products;
 using WebStore.Services.Services.InSQL;
 using WebStore.WepAPI.Clients.Orders;
 using WebStore.WepAPI.Clients.Identity;
+using WebStore.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Logging.AddLog4Net();
 var services = builder.Services;
 services.AddControllersWithViews();
 var databaseType = builder.Configuration["Database"];
