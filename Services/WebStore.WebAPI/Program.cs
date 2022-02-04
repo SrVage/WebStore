@@ -8,7 +8,8 @@ using WebStore.Services.Services;
 using WebStore.Services.Services.InSQL;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Logging.AddLog4Net();
+//builder.Logging.AddLog4Net();
+
 // Add services to the container.
 var services = builder.Services;
 services.AddControllers();
