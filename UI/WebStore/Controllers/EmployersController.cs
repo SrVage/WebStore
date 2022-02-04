@@ -91,7 +91,10 @@ public class EmployersController : Controller
     public IActionResult DeleteConfirmed(int id)
     {
         if (!_employerData.Delete(id))
+        {
+            _logger.LogWarning("Для операции удаления сотрудник с id: {0} не найден", id);
             return NotFound();
+        }
         _logger.LogError("Удаление работника {0}", id);
         return RedirectToAction("Index");
     }
