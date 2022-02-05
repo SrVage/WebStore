@@ -34,6 +34,43 @@ namespace WebStore.Tests.Controllers
 			var actualString = controller.ConfiguredAction(id, value);
 			Assert.Equal(expectedString, actualString);
         }
+
+		[TestMethod, ExpectedException(typeof(ApplicationException))]
+		public void ThrowThrownApplicationException()
+        {
+			const string message = "Message";
+			var controller = new HomeController();
+			controller.Throw(message);
+        }
+
+		[TestMethod]
+		public void ThrowThrownApplicationExceptionWithMessage()
+		{
+			const string message = "Message";
+			var controller = new HomeController();
+			var applicationException = Assert.Throws<ApplicationException>(() => controller.Throw(message));
+			var actualExceptionMessage = applicationException.Message;
+			Assert.Equal(message, actualExceptionMessage);
+
+		}
+
+		[TestMethod]
+		public void StatusWith404ReturnsRedirectToActionError404()
+		{
+			const string status404 = "404";
+			const string expectedActionName = nameof(HomeController.Error);
+
+			var controller = new HomeController();
+
+			var result = controller.Status(status404);
+
+			var redirectActionResult = Assert.IsType<RedirectToActionResult>(result);
+
+			Assert.Null(redirectActionResult.ControllerName);
+
+			var actual_action_name = redirectActionResult.ActionName;
+			Assert.Equal(expectedActionName, actual_action_name);
+		}
 	}
 }
 

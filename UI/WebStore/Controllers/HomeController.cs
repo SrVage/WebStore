@@ -28,9 +28,25 @@ namespace WebStore.Controllers
             return $"Hello World! {id} - {Value1}";
         }
 
+        public void Throw(string Message) => throw new ApplicationException(Message);
+
+
+
         public IActionResult Error()
         {
             return View();
+        }
+
+        public IActionResult Status(string Code)
+        {
+            switch (Code)
+            {
+                default:
+                    return Content($"Status code - {Code}");
+
+                case "404":
+                    return RedirectToAction(nameof(Error));
+            }
         }
     }
 }
