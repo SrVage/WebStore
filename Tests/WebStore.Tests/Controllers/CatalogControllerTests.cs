@@ -13,7 +13,7 @@ namespace WebStore.Tests.Controllers
 	public class CatalogControllerTests
 	{
         [TestMethod]
-        public void Details_Returns_with_Correct_View()
+        public void DetailsReturnsWithCorrectView()
         {
             const int expectedId = 321;
             const string expectedName = "Test product";
