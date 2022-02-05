@@ -22,7 +22,12 @@ namespace WebStore.Controllers
             ViewBag.Products = products;
             return View();
         }
-        
+
+        public string ConfiguredAction(string id, string Value1)
+        {
+            return $"Hello World! {id} - {Value1}";
+        }
+
         public IActionResult Error()
         {
             return View();
