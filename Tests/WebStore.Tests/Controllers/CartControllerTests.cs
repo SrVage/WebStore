@@ -24,25 +24,18 @@ namespace WebStore.Tests.Controllers
         public async Task CheckOutModelStateInvalidReturnsViewWithModel()
         {
             const string expectedDescription = "Test description";
-
             var cartServiceMock = new Mock<ICartService>();
             var orderServiceMock = new Mock<IOrderService>();
-
             var controller = new CartController(cartServiceMock.Object);
             controller.ModelState.AddModelError("error", "Test invalid model");
-
             var orderModel = new OrderViewModel
             {
                 Description = expectedDescription,
             };
-
             var result = await controller.CheckOut(orderModel, orderServiceMock.Object);
-
             var viewResult = Assert.IsType<ViewResult>(result);
             var model = Assert.IsAssignableFrom<CartOrderViewModel>(viewResult.Model);
-
             Assert.Equal(expectedDescription, model.Order.Description);
-
             cartServiceMock.Verify(s => s.GetViewModel());
             cartServiceMock.VerifyNoOtherCalls();
             orderServiceMock.VerifyNoOtherCalls();
@@ -52,11 +45,9 @@ namespace WebStore.Tests.Controllers
         public async Task CheckOutModelStateValidCallServiceAndReturnsRedirect()
         {
             const string expectedUser = "Test user";
-
             const string expectedDescription = "Test description";
             const string expectedAddress = "Test address";
             const string expectedPhone = "Test phone";
-
             var cartServiceMock = new Mock<ICartService>();
             cartServiceMock
                .Setup(c => c.GetViewModel())
@@ -65,7 +56,6 @@ namespace WebStore.Tests.Controllers
                     {
                         Items = new[] { (new ProductViewModel { Name = "Test product" }, 1) }
                     });
-
             const int expectedOrderId = 1;
             var orderServiceMock = new Mock<IOrderService>();
             orderServiceMock
@@ -79,7 +69,6 @@ namespace WebStore.Tests.Controllers
                    Date = DateTime.Now,
                    Items = Array.Empty<OrderItem>(),
                });
-
             var controller = new CartController(cartServiceMock.Object)
             {
                 ControllerContext = new()
@@ -90,16 +79,13 @@ namespace WebStore.Tests.Controllers
                     }
                 }
             };
-
             var orderModel = new OrderViewModel
             {
                 Address = expectedAddress,
                 Phone = expectedPhone,
                 Description = expectedDescription,
             };
-
             var result = await controller.CheckOut(orderModel, orderServiceMock.Object);
-
             var redirectResult = Assert.IsType<RedirectToActionResult>(result);
             Assert.Null(redirectResult.ControllerName);
             Assert.Equal(nameof(CartController.OrderConfirmed), redirectResult.ActionName);
