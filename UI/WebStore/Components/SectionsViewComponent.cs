@@ -11,8 +11,21 @@ public class SectionsViewComponent:ViewComponent
     public SectionsViewComponent(IProductData productData) 
         => _productData = productData;
     
-    public IViewComponentResult Invoke()
+    public IViewComponentResult Invoke(string sectionID)
     {
+        var sectionId = int.TryParse(sectionID, out var id) ? id : (int?)null;
+        var sections = GetSections(sectionId, out var parentSectionId);
+        return View(new SelectableSectionsViewModel
+        {
+            Sections = sections,
+            SectionId = sectionId,
+            ParentSectionId = parentSectionId,
+        });
+    }
+
+    private IEnumerable<SectionViewModel> GetSections(int? SectionId, out int? ParentSectionId)
+    {
+        ParentSectionId = null;
         var sections = _productData.GetSection();
         var parentSections = sections.Where(s => s.ParentID is null);
         var parentSectionsViews = parentSections.Select(s => new SectionViewModel
@@ -26,6 +39,8 @@ public class SectionsViewComponent:ViewComponent
             var childSections = sections.Where(s => s.ParentID == parentSection.ID);
             foreach (var childSection in childSections)
             {
+                if (childSection.ID == SectionId)
+                    ParentSectionId = childSection.ParentID;
                 parentSection.ChildSections.Add(new SectionViewModel
                 {
                     ID = childSection.ID,
@@ -33,12 +48,12 @@ public class SectionsViewComponent:ViewComponent
                     Order = childSection.Order,
                     ParentSection = parentSection
                 });
-                parentSection.ChildSections.Sort((a,b)
+                parentSection.ChildSections.Sort((a, b)
                     => Comparer<int>.Default.Compare(a.Order, b.Order));
             }
         }
-        parentSectionsViews.Sort((a,b)
+        parentSectionsViews.Sort((a, b)
             => Comparer<int>.Default.Compare(a.Order, b.Order));
-        return View(parentSectionsViews); 
+        return parentSectionsViews;
     }
 }
