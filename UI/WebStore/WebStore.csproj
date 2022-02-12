@@ -12,6 +12,7 @@
     <None Remove="View\Home\" />
     <None Remove="Models\" />
     <None Remove="TagHelpers\" />
+    <None Remove="Views\Shared\Components\BreadCrumbs\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
@@ -20,6 +21,7 @@
     <Folder Include="Models\" />
     <Folder Include="wwwroot\Admin\" />
     <Folder Include="TagHelpers\" />
+    <Folder Include="Views\Shared\Components\BreadCrumbs\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
