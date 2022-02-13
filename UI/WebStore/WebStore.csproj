@@ -14,6 +14,7 @@
     <None Remove="TagHelpers\" />
     <None Remove="Views\Shared\Components\BreadCrumbs\" />
     <None Remove="SimpleMvcSitemap" />
+    <None Remove="Views\Shared\Components\Cart\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
@@ -23,6 +24,7 @@
     <Folder Include="wwwroot\Admin\" />
     <Folder Include="TagHelpers\" />
     <Folder Include="Views\Shared\Components\BreadCrumbs\" />
+    <Folder Include="Views\Shared\Components\Cart\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
