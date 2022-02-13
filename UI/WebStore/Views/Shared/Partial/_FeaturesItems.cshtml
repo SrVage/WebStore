@@ -16,7 +16,11 @@
                                       asp-route-BrandId="@Context.Request.Query["BrandId"]"
                                       asp-route-SectionId="@Context.Request.Query["SectionId"]"
                                       >@product.Name</a></p>
-        						<a asp-controller="Cart" asp-action="Add" asp-route-ID="@product.ID" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>В корзину</a>
+        						<a asp-controller="Cart"
+                                   asp-action="Add"
+                                   asp-route-ID="@product.ID"
+                                   data-id="@product.ID"
+                                   class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>В корзину</a>
         					</div>
         					<div class="product-overlay">
         						<div class="overlay-content">
@@ -27,7 +31,12 @@
                                           asp-route-BrandId="@Context.Request.Query["BrandId"]"
                                           asp-route-SectionId="@Context.Request.Query["SectionId"]"
                                           >@product.Name</a></p>
-        							<a asp-controller="Cart" asp-action="Add" asp-route-ID="@product.ID" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>В корзину</a>
+        							<a asp-controller="Cart"
+                                       asp-action="Add"
+                                       asp-route-ID="@product.ID"
+                                       data-id="@product.ID"
+                                       class="btn btn-default add-to-cart">
+                                    <i class="fa fa-shopping-cart"></i>В корзину</a>
         						</div>
         					</div>
         			</div>
