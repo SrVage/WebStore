@@ -84,7 +84,7 @@ namespace WebStore.Services.Services.InCookies
 			{
 				IDs = Cart.Items.Select(i => i.ProductID).ToArray()
 			});
-			var productsView = products.ToView().ToDictionary(p => p.ID);
+			var productsView = products.Products.ToView().ToDictionary(p => p.ID);
 			return new()
 			{
 				Items = cart.Items.Where(i => productsView.ContainsKey(i.ProductID)).Select(i => (productsView[i.ProductID], i.Quantity))!

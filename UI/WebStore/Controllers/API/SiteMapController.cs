@@ -24,7 +24,7 @@ namespace WebStore.Controllers.API
             foreach (var brand in ProductData.GetBrand())
                 nodes.Add(new SitemapNode(Url.Action("Index", "Catalog", new { BrandId = brand.ID })));
 
-            foreach (var product in ProductData.GetProduct())
+            foreach (var product in ProductData.GetProduct().Products)
                 nodes.Add(new SitemapNode(Url.Action("Details", "Catalog", new { product.ID })));
 
             return new SitemapProvider().CreateSitemap(new SitemapModel(nodes));

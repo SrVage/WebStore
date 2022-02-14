@@ -36,8 +36,8 @@ namespace WebStore.WepAPI.Clients.Products
         public Brand? GetBrandById(int Id)
             => Get<BrandDTO>($"{Address}/brand/{Id}").FromDTO();
 
-        public IEnumerable<Product> GetProduct(ProductFilter? productFilter = null)
-            => Post(Address, productFilter ?? new()).Content.ReadFromJsonAsync<IEnumerable<ProductDTO>>().Result!.FromDTO()!;
+        public ProductsPage GetProduct(ProductFilter? productFilter = null)
+            => Post(Address, productFilter ?? new()).Content.ReadFromJsonAsync<ProductsPageDTO>().Result!.FromDTO()!;
 
         public Product? GetProductByID(int ID) 
             => Get<ProductDTO>($"{Address}/{ID}").FromDTO();

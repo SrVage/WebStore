@@ -9,24 +9,29 @@ namespace WebStore.Controllers;
 public class CatalogController : Controller
 {
     private readonly IProductData _productData;
+    private readonly IConfiguration _configuration;
 
-    public CatalogController(IProductData productData)
+    public CatalogController(IProductData productData, IConfiguration configuration)
     {
         _productData = productData;
+        _configuration = configuration;
     }
-    public IActionResult Index(int? brandID, int? sectionID)
+    public IActionResult Index(int? brandID, int? sectionID, int page=1, int? pageSize=null)
     {
+        var pageSizes = pageSize ?? (int.TryParse(_configuration["CatalogPageSize"], out var value) ? value : null);
         var filter = new ProductFilter
         {
             BrandID = brandID,
-            SectionID = sectionID
+            SectionID = sectionID,
+            Page = page,
+            PageSize = pageSizes
         };
         var products = _productData.GetProduct(filter);
         var catalogModel = new CatalogViewModel
         {
             BrandID = brandID,
             SectionID = sectionID,
-            Products = products.OrderBy(p=>p.Order).ToView()
+            Products = products.Products.OrderBy(p=>p.Order).ToView()
         };
         return View(catalogModel);
     }
