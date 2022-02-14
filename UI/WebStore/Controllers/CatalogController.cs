@@ -26,12 +26,18 @@ public class CatalogController : Controller
             Page = page,
             PageSize = pageSizes
         };
-        var products = _productData.GetProduct(filter);
+        var (products, totalCount) = _productData.GetProduct(filter);
         var catalogModel = new CatalogViewModel
         {
             BrandID = brandID,
             SectionID = sectionID,
-            Products = products.Products.OrderBy(p=>p.Order).ToView()
+            Products = products.OrderBy(p=>p.Order).ToView(),
+            PageViewModel = new()
+            {
+                Page = page,
+                PageSize = pageSize ?? 0,
+                TotalItems = totalCount
+            }
         };
         return View(catalogModel);
     }
