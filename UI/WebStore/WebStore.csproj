@@ -15,6 +15,7 @@
     <None Remove="Views\Shared\Components\BreadCrumbs\" />
     <None Remove="SimpleMvcSitemap" />
     <None Remove="Views\Shared\Components\Cart\" />
+    <None Remove="Microsoft.Extensions.Http.Polly" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
@@ -42,6 +43,7 @@
     <PackageReference Include="Serilog.Extensions.Logging.File" Version="2.0.0" />
     <PackageReference Include="Serilog.Sinks.Seq" Version="5.1.1" />
     <PackageReference Include="SimpleMvcSitemap" Version="4.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="6.0.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\WebStore.Domain\WebStore.Domain.csproj" />
