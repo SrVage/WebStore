@@ -17,8 +17,8 @@ namespace WebStore.Controllers
         // GET: /<controller>/
         public IActionResult Index([FromServices] IProductData productData)
         {
-            var products = productData.GetProduct()
-                .OrderBy(p => p.Order).Take(6).ToView();
+            var products = productData.GetProduct(new() {Page = 1, PageSize = 6}).Products
+                .OrderBy(p => p.Order).ToView();
             ViewBag.Products = products;
             return View();
         }

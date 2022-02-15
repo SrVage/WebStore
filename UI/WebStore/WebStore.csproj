@@ -14,6 +14,7 @@
     <None Remove="TagHelpers\" />
     <None Remove="Views\Shared\Components\BreadCrumbs\" />
     <None Remove="SimpleMvcSitemap" />
+    <None Remove="Views\Shared\Components\Cart\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
@@ -23,6 +24,8 @@
     <Folder Include="wwwroot\Admin\" />
     <Folder Include="TagHelpers\" />
     <Folder Include="Views\Shared\Components\BreadCrumbs\" />
+    <Folder Include="Views\Shared\Components\Cart\" />
+    <Folder Include="wwwroot\js\Cart\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
@@ -48,5 +51,8 @@
     <ProjectReference Include="..\..\Services\WebStore.Interfaces\WebStore.Interfaces.csproj" />
     <ProjectReference Include="..\..\Services\WebStore.Services\WebStore.Services.csproj" />
     <ProjectReference Include="..\..\Services\WebStore.WepAPI.Clients\WebStore.WepAPI.Clients.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\js\Cart\" />
   </ItemGroup>
 </Project>

@@ -18,7 +18,7 @@ namespace WebStore.Tests.Controllers
 		public void IndexReturnsViewResult()
         {
 			var mockProductData = new Mock<IProductData>();
-			mockProductData.Setup(s => s.GetProduct(It.IsAny<ProductFilter>())).Returns<ProductFilter>(f => Enumerable.Empty<Product>());
+			mockProductData.Setup(s => s.GetProduct(It.IsAny<ProductFilter>())).Returns<ProductFilter>(f => new ProductsPage(Enumerable.Empty<Product>(), 0));
 			var controller = new HomeController();
 			var actualResult = controller.Index(mockProductData.Object);
 			Assert.IsType<ViewResult>(actualResult);

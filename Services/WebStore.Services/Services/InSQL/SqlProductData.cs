@@ -44,7 +44,7 @@ namespace WebStore.Services.Services.InSQL
        .Include(b => b.Products)
        .FirstOrDefault(b => b.ID == Id);
 
-        public IEnumerable<Product> GetProduct(ProductFilter? productFilter = null)
+        public ProductsPage GetProduct(ProductFilter? productFilter = null)
         {
             IQueryable<Product> query = _dataBase.Products
             .Include(p => p.Brand)
@@ -60,7 +60,13 @@ namespace WebStore.Services.Services.InSQL
                 if (productFilter?.BrandID is { } brand_id)
                     query = query.Where(p => p.BrandID == brand_id);
             }
-            return query;
+            var count = query.Count();
+
+            if (productFilter is { PageSize: > 0 and var page_size, Page: > 0 and var page })
+                query = query
+                   .Skip((page - 1) * page_size)
+                   .Take(page_size);
+           return new(query.AsEnumerable(), count);
         }
 
         public Product? GetProductByID(int ID) => _dataBase.Products
