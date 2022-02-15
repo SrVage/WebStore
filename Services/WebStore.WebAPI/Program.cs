@@ -57,6 +57,12 @@ services.AddScoped<IOrderService, SqlOrderService>();
 
 var app = builder.Build();
 
+await using (var scope = app.Services.CreateAsyncScope())
+{
+    var dataBaseInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+    await dataBaseInitializer.InitializeAsync(RemoveBefore: false);
+}
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

@@ -30,19 +30,6 @@ var builder = WebApplication.CreateBuilder(args);
 //   .WriteTo.Seq("http://localhost:5341/"));
 var services = builder.Services;
 services.AddControllersWithViews();
-var databaseType = builder.Configuration["Database"];
-switch (databaseType)
-{
-    case "SqlServer":
-        services.AddDbContext<WebStoreDB>(o
-    => o.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
-        break;
-    case "Sqlite":
-        services.AddDbContext<WebStoreDB>(o
-    => o.UseSqlite(builder.Configuration.GetConnectionString("Sqlite"), o=> o.MigrationsAssembly("WebStore.DAL.Sqlite")));
-        break;
-}
-services.AddTransient<IDbInitializer, DbInitializer>();
 services.AddIdentity<User, Role>()
     //.AddEntityFrameworkStores<WebStoreDB>()
     .AddDefaultTokenProviders();
@@ -101,11 +88,11 @@ services.AddHttpClient("WebStoreAPI", client => client.BaseAddress = new(configu
 
 var app = builder.Build();
 
-await using (var scope = app.Services.CreateAsyncScope())
+/*await using (var scope = app.Services.CreateAsyncScope())
 {
     var dataBaseInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
     await dataBaseInitializer.InitializeAsync(RemoveBefore: false);
-}
+}*/
 
 if (app.Environment.IsDevelopment())
 {
