@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WebStore.Domain.Entities.Identity;
 using WebStore.Domain.ViewModels.Identity;
 
 namespace WebStore.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -18,8 +20,22 @@ namespace WebStore.Controllers
             _logger = logger;
         }
 
+        [AllowAnonymous]
+        public async Task<IActionResult> IsFreeName(string UserName)
+        {
+            var user = await _userManager.FindByNameAsync(UserName);
+            _logger.LogInformation("Валидация наличия пользвоателя {0} - {1}",
+                UserName,
+                user is null ? "отсутствует" : "существует");
+
+            return Json(user is null ? "true" : $"Пользователь с таким именем {UserName} уже существует");
+        }
+
+        [AllowAnonymous]
         public IActionResult Register() => View(new RegisterUserViewModel());
+
         [HttpPost, ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterUserViewModel model)
         {
             if (!ModelState.IsValid)
@@ -50,8 +66,10 @@ namespace WebStore.Controllers
             }
             return View(model);
         }
+        [AllowAnonymous]
         public IActionResult Login(string returnUrl) => View(new LoginUserViewModel { ReturnUrl = returnUrl});
         [HttpPost, ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(LoginUserViewModel model)
         {
             if (!ModelState.IsValid)
@@ -78,7 +96,7 @@ namespace WebStore.Controllers
             _logger.LogInformation("Полозователь {0} вышел из системы", userName);
             return RedirectToAction("Index", "Home");
         }
-
+        [AllowAnonymous]
         public IActionResult AccessDenied()
         {
             _logger.LogWarning("Ошибка доступа к {0}", ControllerContext.HttpContext.Request.Path);
