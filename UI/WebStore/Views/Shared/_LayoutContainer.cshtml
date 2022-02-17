@@ -4,3 +4,12 @@
 <main class="container">
     @RenderBody()
 </main>
+@section Styles
+{
+    @await RenderSectionAsync("Styles", false)
+}
+
+@section Scripts
+{
+    @await RenderSectionAsync("Scripts", false)
+}
