@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
+
 
 namespace WebStore.Domain.ViewModels.Identity
 {
@@ -6,6 +8,8 @@ namespace WebStore.Domain.ViewModels.Identity
     {
         [Required]
         [Display(Name ="Имя пользователя")]
+        [Remote("IsFreeName", "Account")]
+
         public string UserName { get; set; }
         [Required]
         [Display(Name = "Пароль")]

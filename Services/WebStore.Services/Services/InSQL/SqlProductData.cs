@@ -64,6 +64,7 @@ namespace WebStore.Services.Services.InSQL
 
             if (productFilter is { PageSize: > 0 and var page_size, Page: > 0 and var page })
                 query = query
+                   .OrderBy(p=>p.Order)
                    .Skip((page - 1) * page_size)
                    .Take(page_size);
            return new(query.AsEnumerable(), count);

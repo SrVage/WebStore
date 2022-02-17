@@ -30,7 +30,8 @@ namespace WebStore.TagHelpers
             ul.AddCssClass("pagination");
 
             var urlHelper = _urlHelperFactory.GetUrlHelper(ViewContext);
-            for (var i = 1; i < PageModel.TotalPages; i++)
+            var totalPages = PageModel.TotalPages;
+            for (var i = 1; i <= totalPages; i++)
                 ul.InnerHtml.AppendHtml(CreateElement(i, urlHelper));
 
             output.Content.AppendHtml(ul);
@@ -46,10 +47,13 @@ namespace WebStore.TagHelpers
                 li.AddCssClass("active");
             else
             {
-                PageUrlValues["page"] = PageNumber;
-                a.Attributes["href"] = Url.Action(PageAction, PageUrlValues);
+                a.Attributes["href"] = "#";
             }
 
+            PageUrlValues["page"] = PageNumber;
+
+            foreach (var (key, value) in PageUrlValues.Select(v => (v.Key, Value: v.Value?.ToString())).Where(v => v.Value is { Length: > 0 }))
+                a.MergeAttribute($"data-{key}", value);
             li.InnerHtml.AppendHtml(a);
             return li;
         }

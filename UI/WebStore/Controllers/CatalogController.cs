@@ -8,6 +8,7 @@ namespace WebStore.Controllers;
 
 public class CatalogController : Controller
 {
+    private const string _catalogPageSize = "CatalogPageSize";
     private readonly IProductData _productData;
     private readonly IConfiguration _configuration;
 
@@ -48,5 +49,24 @@ public class CatalogController : Controller
         if (product is null)
             return NotFound();
         return View(product.ToView());
+    }
+
+    public IActionResult GetProductsView(int? BrandId, int? SectionId, int Page = 1, int? PageSize = null)
+    {
+        var products = GetProducts(BrandId, SectionId, Page, PageSize);
+        return PartialView("Partial/_Products", products);
+    }
+
+    private IEnumerable<ProductViewModel> GetProducts(int? BrandId, int? SectionId, int Page, int? PageSize)
+    {
+        var products = _productData.GetProduct(new()
+        {
+            BrandID = BrandId,
+            SectionID = SectionId,
+            Page = Page,
+            PageSize = PageSize ?? _configuration.GetValue(_catalogPageSize, 6),
+        });
+
+        return products.Products.OrderBy(p => p.Order).ToView()!;
     }
 }

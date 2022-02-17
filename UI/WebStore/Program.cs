@@ -16,6 +16,9 @@ using WebStore.Logging;
 using Serilog;
 using Serilog.Events;
 using Serilog.Formatting.Json;
+using Polly;
+using Polly.Extensions.Http;
+using WebStore.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 //builder.Logging.AddLog4Net();
@@ -30,19 +33,6 @@ var builder = WebApplication.CreateBuilder(args);
 //   .WriteTo.Seq("http://localhost:5341/"));
 var services = builder.Services;
 services.AddControllersWithViews();
-var databaseType = builder.Configuration["Database"];
-switch (databaseType)
-{
-    case "SqlServer":
-        services.AddDbContext<WebStoreDB>(o
-    => o.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
-        break;
-    case "Sqlite":
-        services.AddDbContext<WebStoreDB>(o
-    => o.UseSqlite(builder.Configuration.GetConnectionString("Sqlite"), o=> o.MigrationsAssembly("WebStore.DAL.Sqlite")));
-        break;
-}
-services.AddTransient<IDbInitializer, DbInitializer>();
 services.AddIdentity<User, Role>()
     //.AddEntityFrameworkStores<WebStoreDB>()
     .AddDefaultTokenProviders();
@@ -56,7 +46,9 @@ services.AddHttpClient("WebStoreAPIIdentity", client => client.BaseAddress = new
    .AddTypedClient<IUserTwoFactorStore<User>, UsersClient>()
    .AddTypedClient<IUserClaimStore<User>, UsersClient>()
    .AddTypedClient<IUserLoginStore<User>, UsersClient>()
-   .AddTypedClient<IRoleStore<Role>, RolesClient>();
+   .AddTypedClient<IRoleStore<Role>, RolesClient>()
+   .AddPolicyHandler(GetRetryPolicy());
+
 
 services.Configure<IdentityOptions>(opt =>
 {
@@ -97,15 +89,34 @@ services.AddHttpClient("WebStoreAPI", client => client.BaseAddress = new(configu
 .AddTypedClient<IValuesService, ValuesClient>()
 .AddTypedClient<IEmployerData, EmployersClient>()
 .AddTypedClient<IProductData, ProductsClient>()
-.AddTypedClient<IOrderService, OrdersClient>();
+.AddTypedClient<IOrderService, OrdersClient>()
+.AddPolicyHandler(GetRetryPolicy())
+.AddPolicyHandler(GetCircuitBreakerPolicy());
+
+static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy(int MaxRetryCount = 5, int MaxJitterTime = 1000)
+{
+    var jitter = new Random();
+    return HttpPolicyExtensions
+       .HandleTransientHttpError()
+       .WaitAndRetryAsync(MaxRetryCount, RetryAttempt =>
+            TimeSpan.FromSeconds(Math.Pow(2, RetryAttempt)) +
+            TimeSpan.FromMilliseconds(jitter.Next(0, MaxJitterTime)));
+}
+
+static IAsyncPolicy<HttpResponseMessage> GetCircuitBreakerPolicy() =>
+    HttpPolicyExtensions
+       .HandleTransientHttpError()
+       .CircuitBreakerAsync(handledEventsAllowedBeforeBreaking: 5, TimeSpan.FromSeconds(30));
+
+services.AddSignalR();
 
 var app = builder.Build();
 
-await using (var scope = app.Services.CreateAsyncScope())
+/*await using (var scope = app.Services.CreateAsyncScope())
 {
     var dataBaseInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
     await dataBaseInitializer.InitializeAsync(RemoveBefore: false);
-}
+}*/
 
 if (app.Environment.IsDevelopment())
 {
@@ -118,6 +129,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseEndpoints(endpoints =>
 {
+    endpoints.MapHub<ChatHub>("/chat");
     endpoints.MapControllerRoute(
       name: "areas",
       pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"

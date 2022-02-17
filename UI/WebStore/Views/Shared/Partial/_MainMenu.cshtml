@@ -22,6 +22,9 @@
         <li><a is-active-route asp-controller="Contact" asp-action="Index">Контакты</a></li>
         <li><a is-active-route asp-controller="Employers" asp-action="Index">Сотрудники</a></li>
         <li><a is-active-route asp-controller="WebAPI" asp-action="Index" class="@IsActive("WebAPI")">WebAPI</a></li>
+                <li><a ws-is-active-route asp-controller="AjaxTest" asp-action="Index">AJAX</a></li>
+                <li><a ws-is-active-route asp-controller="AjaxTest" asp-action="Chat">Чат</a></li>
+
     </ul>
 </div>
 @functions{
